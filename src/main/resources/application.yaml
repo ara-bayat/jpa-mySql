@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: mysql-jpa
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/mydb?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: pass123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+    # (اختیاری) تنظیمات HikariCP Connection Pool
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      idle-timeout: 30000
+      connection-timeout: 20000
+      max-lifetime: 1800000
+      pool-name: MyHikariPool
+
+  jpa:
+    hibernate:
+      ddl-auto: create        # در پروداکشن: none یا validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+        # برای MySQL 8 می‌تونی از MySQL8Dialect هم استفاده کنی
+    open-in-view: false
+
+  # اگر از Flyway یا Liquibase استفاده می‌کنی
+  # flyway:
+  #   enabled: true
+  #   locations: classpath:db/migration
+
+server:
+  port: 13080
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
